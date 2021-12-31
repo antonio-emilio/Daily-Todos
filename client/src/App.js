@@ -1,18 +1,49 @@
-import React, { Fragment } from "react";
-import './App.css';
+// import React, { Fragment } from "react";
+// import './App.css';
 
-//Componentes
-import InputTodo from "./components/InputTodo";
-import ListTodos from "./components/ListTodos";
-function App() {
-  return (
-    <Fragment>
-      <div className="container">
-        <InputTodo></InputTodo>
-        <ListTodos></ListTodos>
-      </div>
-    </Fragment>
-  );
-}
+// //Componentes
+// import InputTodo from "./components/InputTodo";
+// import ListTodos from "./components/ListTodos";
+// function App() {
+//   return (
+//     <Fragment>
+//       <div className="container">
+//         <InputTodo></InputTodo>
+//         <ListTodos></ListTodos>
+//       </div>
+//     </Fragment>
+//   );
+// }
 
-export default App;
+// export default App;
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import routes from "./routes";
+import withTracker from "./withTracker";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
+
+export default () => (
+  <Router basename={process.env.REACT_APP_BASENAME || ""}>
+    <div>
+      {routes.map((route, index) => {
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={withTracker(props => {
+              return (
+                <route.layout {...props}>
+                  <route.component {...props} />
+                </route.layout>
+              );
+            })}
+          />
+        );
+      })}
+    </div>
+  </Router>
+);
