@@ -11,5 +11,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
-//PAREI NO MINUTO 50:33
